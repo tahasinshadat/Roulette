@@ -35,17 +35,17 @@ export default function GameScreen({ startingBalance, onGameEnd }: GameScreenPro
 
       if (betType === "number" && betValue === spinResult) {
         won = true
-        payout = betAmount * 36 // 36:1 payout for straight bet
+        payout = betAmount * 36 // Total return: original bet + 35x profit
       } else if (betType === "red" && betValue === "red" && spinColor === "red") {
         won = true
-        payout = betAmount * 2 // 1:1 payout for color
+        payout = betAmount * 2 // Total return: original bet + 1x profit
       } else if (betType === "black" && betValue === "black" && spinColor === "black") {
         won = true
-        payout = betAmount * 2
+        payout = betAmount * 2 // Total return: original bet + 1x profit
       }
 
-      const newBalance = won ? balance + payout : balance - betAmount
-      const newHouseWinnings = won ? houseWinnings - payout : houseWinnings + betAmount
+      const newBalance = won ? balance - betAmount + payout : balance - betAmount
+      const newHouseWinnings = won ? houseWinnings - (payout - betAmount) : houseWinnings + betAmount
 
       setWinningNumber(spinResult)
       setLastResult({ number: spinResult, color: spinColor })
